@@ -18,6 +18,7 @@ for line in lines:
         if any(x in line for x in closing):
             corrupt.append(line)
             break
+        # not needed for part 1
         if not all(x in line for x in closing):
             incomplete.append(line)
             break

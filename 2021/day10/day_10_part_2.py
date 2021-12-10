@@ -6,8 +6,7 @@ closing = [")", "]", "}", ">"]
 
 corrupt = []
 incomplete = []
-result_arr = []
-
+result = []
 
 for line in lines:
     while any(x in line for x in brackets):
@@ -16,6 +15,7 @@ for line in lines:
 
     # check whether the line is corrupted or incomplete
     for closed in closing:
+        # not needed for part 2
         if any(x in line for x in closing):
             corrupt.append(line)
             break
@@ -24,21 +24,18 @@ for line in lines:
             break
 
 for incomplete_line in incomplete:
-    result = 0
+    acc = 0
 
     for c in incomplete_line[::-1]:
         if c == "(":
-            result = result * 5 + 1
-            #continue
-        if c == "[":
-            result = result * 5 + 2
-            #continue
-        if c == "{":
-            result = result * 5 + 3
-            #continue
-        if c == "<":
-            result = result * 5 + 4
+            acc = acc * 5 + 1
+        elif c == "[":
+            acc = acc * 5 + 2
+        elif c == "{":
+            acc = acc * 5 + 3
+        elif c == "<":
+            acc = acc * 5 + 4
 
-    result_arr.append(result)
+    result.append(acc)
            
-print(sorted(result_arr)[len(result_arr) // 2])
+print(sorted(result)[len(result) // 2])
