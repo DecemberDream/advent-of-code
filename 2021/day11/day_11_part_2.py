@@ -20,7 +20,7 @@ while True:
 
     data[np.where(flashed_in_step)] = 0
 
-    if np.sum(flashed_in_step) == 100:
+    if np.sum(flashed_in_step) == len(data.flatten()):
         break
     
     step += 1
