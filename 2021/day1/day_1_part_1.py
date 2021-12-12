@@ -6,7 +6,7 @@ prev_num = 0
 
 for line in lines:
     num = int(line)
-    counter += 1 * (num > prev_num)
+    counter += (num > prev_num)
     prev_num = num
     
 print(counter - 1)
