@@ -2,23 +2,26 @@ import numpy as np
 from queue import PriorityQueue
 
 
-def enlarge(maze_original, new_size):
-    rows_orig, cols_orig = maze_original.shape
-    
-    maze = np.append(maze_original, maze_original + 1, axis=1)
-    
-    for i in range(2, new_size):
-        maze = np.append(maze, maze_original + i, axis=1)
-        
-    for i in range(1, new_size):
-        maze = np.append(maze, maze[:rows_orig,:] + i, axis=0)
-
-    maze[maze > 9] %= 9
-    
-    return maze
+# =============================================================================
+# def enlarge(maze_original, new_size):
+#     rows_orig, cols_orig = maze_original.shape
+#     
+#     maze = np.append(maze_original, maze_original + 1, axis=1)
+#     
+#     for i in range(2, new_size):
+#         maze = np.append(maze, maze_original + i, axis=1)
+#         
+#     for i in range(1, new_size):
+#         maze = np.append(maze, maze[:rows_orig,:] + i, axis=0)
+# 
+#     maze[maze > 9] %= 9
+#     
+#     return maze
+# =============================================================================
 
 maze = np.genfromtxt("../../input/day_15_data.txt", delimiter=1, dtype=np.uint16)
-maze = enlarge(maze, 5)
+#maze = enlarge(maze, 5)
+maze = np.block([[(maze + i + j - 1) % 9 + 1 for i in range(5)] for j in range(5)])
 
 def dijkstra(m, start, goal):
     rows, cols = m.shape
