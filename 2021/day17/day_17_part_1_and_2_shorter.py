@@ -1,3 +1,6 @@
+import math
+
+
 def sgn(x):
     return (x > 0) - (x < 0)
 
@@ -31,15 +34,18 @@ y_range = data[1].split("=")[1].split("..")
 x_range = [int(x) for x in x_range]
 y_range = [int(y) for y in y_range]
 
-target = (x_range[0], x_range[1], y_range[0], y_range[1])
+target = (min(x_range), max(x_range), min(y_range), max(y_range))
 
-r = 200
+min_x_vel = int(math.sqrt(target[0]))
+max_x_vel = target[1] + 1
+min_y_vel = target[2]
+max_y_vel = abs(target[2]) + 1
 
 max_y = 0
 viable = 0
 
-for vx in range(-r, r):
-    for vy in range(-r, r):
+for vx in range(min_x_vel, max_x_vel):
+    for vy in range(min_y_vel, max_y_vel):
         sim = simulate(vx, vy, target)
         max_y = max(max_y, sim)
         viable += sim >= 0
