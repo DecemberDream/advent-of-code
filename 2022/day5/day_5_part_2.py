@@ -1,8 +1,5 @@
 def move(d: dict, n: int, f: int, t: int) -> dict:
-    for i in range(n):
-        e = list(d[f].pop(n-(i+1)))
-        d[t] = e + d[t]
-
+    d[t], d[f] = d[f][:n] + d[t], d[f][n:]
     return d
 
 
