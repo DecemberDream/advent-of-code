@@ -2,7 +2,12 @@ import numpy as np
 
 
 def all_less(a):
-    return all(x < a[0] for x in a[1:])
+    for x in a[1:]:
+        if x >= a[0]:
+            return False
+
+    return True
+    # return all(x < a[0] for x in a[1:]) # slower
 
 
 def is_visible(r, c, data):
@@ -23,5 +28,5 @@ counter = 0
 for row in range(1, data.shape[0]-1):
     for col in range(1, data.shape[1]-1):
         counter += is_visible(row, col, data)
-        
+
 print(counter + 2 * data.shape[0] + 2 * data.shape[0] - 4)
