@@ -6,7 +6,7 @@ def a_star(start: tuple, goal: tuple, h: callable, heights: np.ndarray):
     # The set of discovered nodes that may need to be (re-)expanded.
     # Initially, only the start node is known.
     # This is usually implemented as a min-heap or priority queue rather than a hash-set.
-    open_set = {start}
+    open_set = {start: heights.shape[0] * heights.shape[1]}
 
     # For node n, came_from[n] is the node immediately preceding it on the cheapest path from start
     # to n currently known.
@@ -22,17 +22,12 @@ def a_star(start: tuple, goal: tuple, h: callable, heights: np.ndarray):
     while open_set:  # is not empty:
         # This operation can occur in O(Log(N)) time if open_set is a min-heap or a priority queue
         # The node in open_set having the lowest f_score[] value
-        sorted_f_scores = dict(sorted(f_score.items(), key=lambda item: item[1]))
-
-        for k, v in sorted_f_scores.items():
-            if k in open_set:
-                current = k
-                break
-
+        current, _ = min(open_set.items(), key=lambda x: x[1])
+        
         if current == goal:
             return reconstruct_path(came_from, current)
 
-        open_set.remove(current)
+        open_set.pop(current)
 
         for neighbor in get_neighbors(current):
             if not is_valid(heights[current], heights[neighbor]):
@@ -48,7 +43,7 @@ def a_star(start: tuple, goal: tuple, h: callable, heights: np.ndarray):
                 f_score[neighbor] = tentative_g_score + h(neighbor, goal)
 
                 if neighbor not in open_set:
-                    open_set.add(neighbor)
+                    open_set[neighbor] = f_score[neighbor]
 
     # Open set is empty but goal was never reached
     return None
